@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import { Grid, Typography, TextField } from '@material-ui/core';
 
@@ -28,5 +29,9 @@ export default function GetCert(props) {
             </Grid>
         </Grid>
     )
+}
 
+GetCert.propTypes = {
+    certValue: PropTypes.string.isRequired,
+    setCertValue: PropTypes.func.isRequired
 }

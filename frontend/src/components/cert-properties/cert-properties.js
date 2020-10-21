@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import PropTypes from 'prop-types';
 
 import { Grid, Select, MenuItem, TextField, Typography, FormControl } from '@material-ui/core';
 import { useStyles } from './cert-properties-styles';
@@ -102,4 +103,25 @@ export default function CertProperties(props) {
             </Grid>
         </Grid>
     );
+}
+
+CertProperties.propTypes = {
+    algValue: PropTypes.string.isRequired,
+    setAlgValue: PropTypes.func.isRequired,
+    sizeValue: PropTypes.number.isRequired,
+    setSizeValue: PropTypes.func.isRequired,
+    c: PropTypes.string.isRequired,
+    setC: PropTypes.func.isRequired,
+    st: PropTypes.string.isRequired,
+    setST: PropTypes.func.isRequired,
+    l: PropTypes.string.isRequired,
+    setL: PropTypes.func.isRequired,
+    o: PropTypes.string.isRequired,
+    setO: PropTypes.func.isRequired,
+    ou: PropTypes.string.isRequired,
+    setOU: PropTypes.func.isRequired,
+    cn: PropTypes.string.isRequired,
+    setCN: PropTypes.func.isRequired,
+    email: PropTypes.string.isRequired,
+    setEmail: PropTypes.func.isRequired
 }

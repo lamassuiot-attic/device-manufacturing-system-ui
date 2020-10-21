@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import { Grid, Typography, TextField } from '@material-ui/core';
 
@@ -25,4 +26,9 @@ export default function ServerProperties(props) {
             </Grid>
         </Grid>
     );
+}
+
+ServerProperties.propTypes = {
+    serverValue: PropTypes.string.isRequired,
+    setServerValue: PropTypes.func.isRequired
 }
