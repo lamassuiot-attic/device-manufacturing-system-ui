@@ -9,19 +9,16 @@ import AlertBar from '../../components/alert-bar';
 import { postSetConfig } from '../../services/api/backend';
 
 export default function Config() {
-    const SCEPprotocol = process.env.REACT_APP_SCEP_PROTOCOL
-    const SCEPhost = process.env.REACT_APP_SCEP_HOST
-    const SCEPport = process.env.REACT_APP_SCEP_PORT
 
     const [certValue, setCertValue] = useState('');
-    const [serverValue, setServerValue] = useState(SCEPprotocol + "://" + SCEPhost + ":" + SCEPport + "/scep");
+    const [caValue, setCAValue] = useState("Lamassu-Root-CA1-RSA4096");
     const [correct, setCorrect] = useState(null);
     const [error, setError] = useState(null);
 
     const handleConfigSubmit = (event) => {
         const data = {
             "crt": certValue,
-            "serverURL": serverValue,
+            "ca": caValue,
         }
         postSetConfig(data).then(
             (response) => {
@@ -58,7 +55,7 @@ export default function Config() {
                         <GetCert setCertValue={setCertValue} certValue={certValue}/>
                     </Grid>
                     <Grid item xs={6}>
-                        <ServerProperties setServerValue={setServerValue} serverValue={serverValue}/>
+                        <ServerProperties setCAValue={setCAValue} caValue={caValue}/>
                     </Grid>
                     <Grid item xs={3}>
                         <Button fullWidth type="submit" variant="contained" color="primary">

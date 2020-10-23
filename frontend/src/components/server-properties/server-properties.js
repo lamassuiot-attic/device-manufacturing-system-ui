@@ -1,34 +1,38 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { Grid, Typography, TextField } from '@material-ui/core';
+import { Grid, Typography, Select, MenuItem } from '@material-ui/core';
 
 export default function ServerProperties(props) {
 
-    const handleServerValueChange = (event) => {
-        props.setServerValue(event.target.value);
+    const handleCAValueChange = (event) => {
+        props.setCAValue(event.target.value);
     }
 
     return (
         <Grid container spacing={2}>
             <Grid item xs={12}>
                 <Typography variant="h6">
-                    Insert server URL:
+                    Select CA:
                 </Typography>
             </Grid>
             <Grid item xs={12}>
-                <TextField
-                    label="Insert here server URL"
+                <Select
+                    value={props.caValue}
                     fullWidth
-                    value={props.serverValue}
-                    onChange={handleServerValueChange}
-                />
+                    onChange={handleCAValueChange}
+                >
+                    <MenuItem value={"Lamassu-Root-CA1-RSA4096"}>Lamassu-Root-CA1-RSA4096</MenuItem>
+                    <MenuItem value={"Lamassu-Root-CA2-RSA2048"}>Lamassu-Root-CA2-RSA2048</MenuItem>
+                    <MenuItem value={"Lamassu-Root-CA3-ECC384"}>Lamassu-Root-CA3-ECC384</MenuItem>
+                    <MenuItem value={"Lamassu-Root-CA4-ECC256"}>Lamassu-Root-CA4-ECC256</MenuItem>
+                </Select>
             </Grid>
         </Grid>
     );
 }
 
 ServerProperties.propTypes = {
-    serverValue: PropTypes.string.isRequired,
-    setServerValue: PropTypes.func.isRequired
+    caValue: PropTypes.string.isRequired,
+    setCAValue: PropTypes.func.isRequired
 }
