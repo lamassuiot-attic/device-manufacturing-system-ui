@@ -26,7 +26,6 @@ export default function AlertBar(props) {
             horizontal: 'left',
         }}
         open={isOpen}
-        autoHideDuration={6000}
         onClose={handleClose}
       >
         <SnackbarContent
