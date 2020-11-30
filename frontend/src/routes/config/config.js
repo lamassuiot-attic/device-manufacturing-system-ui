@@ -39,9 +39,8 @@ export default function Config(props) {
                                            setCertValue(text);
                                        }
                                    )
-                                    setIsApprobed(true, () => {
-                                        clearInterval(timer);
-                                    });
+                                    clearInterval(timer);
+                                    setIsApprobed(true);
                                     setError(null);
                                }
                            }
@@ -50,6 +49,7 @@ export default function Config(props) {
                     }
               })
             }else{
+                console.log("erroreeaa baina ez network")
               response.text().then(
                 (text) => {
                   setError(text);
@@ -57,7 +57,9 @@ export default function Config(props) {
                 }
               )
             }
-          }).catch(error => setError(error.message)); 
+          }).catch(error => {
+              console.log("erroreeaa")
+              setError(error.message)}); 
       }), 10000) 
     }, [props.match.params.id])
 
@@ -67,25 +69,32 @@ export default function Config(props) {
             "crt": certValue,
             "ca": caValue,
         }
-        postSetConfig(data).then(
-            (response) => {
-                if (response.ok) {
-                    setCorrect("Configuration successfully loaded");
-                }else{
-                    response.text().then(
-                        (text) => {
-                            setError(text);
-                        }
-                    )
+        updateKeycloakToken().success(() => {
+            postSetConfig(data).then(
+                (response) => {
+                    if (response.ok) {
+                        setCorrect("Configuration successfully loaded");
+                    }else{
+                        response.text().then(
+                            (text) => {
+                                setError(text);
+                            }
+                        )
+                    }
                 }
-            }
-        ).catch( error => setError(error.message));
+            ).catch( error => setError(error.message));
+        })
         event.preventDefault();
     }
 
     return(
         <Container maxWidth="md">
-            { !isApprobed && <CircularProgress size={100}/>}
+            { !isApprobed && (
+                <React.Fragment>
+                    <CircularProgress size={100}/>
+                    <AlertBar setMessage={()=>{}} message={"Waiting for Enroller response..."} type="warning"/>
+                </React.Fragment>
+            )}
             { error !== null && <AlertBar setMessage={setError} message={error} type="error"/>}
             { correct !== null && <AlertBar setMessage={setCorrect} message={correct} type="success"/>}
             { isApprobed && (
@@ -94,7 +103,7 @@ export default function Config(props) {
                 <Grid container spacing={2} justify="center">
                     <Grid item xs={12}>
                         <Typography variant="h3">
-                            Configuration
+                            Configuration (Step 2)
                         </Typography>
                     </Grid>
                     <Grid item xs={12}>

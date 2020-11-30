@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-import { Grid, CircularProgress } from '@material-ui/core';
+import { Grid, CircularProgress, Container, Box, Typography, Divider } from '@material-ui/core';
 
 import CSRBox from '../components/csr-box';
 import AlertBar from '../components/alert-bar';
@@ -43,19 +43,29 @@ export default function Home() {
     }, [])
 
     return(
-      <React.Fragment>
+      <Container maxWidth="md">
         { error !== null && <AlertBar setMessage={setError} message={error} type= "error"/>}
         { (error === null && !isLoaded && csrs !== null) && <CircularProgress/>}
         { (error === null && isLoaded && csrs !== null) && (
-        <Grid container spacing={2}>
-          {csrs.length > 1 ?
-              (csrs.map(csr => (
-                  <CSRBox key={csr.id.toString()} csr={csr}/>
-              ))) : (
-                  <CSRBox key={csrs.id.toString()} csr={csrs}/>
-          )}
-        </Grid>)}
-      </React.Fragment>
+          <Box border={1} p={4} borderRadius="borderRadius">
+            <Grid container spacing={2}>
+              <Grid item xs={12}>
+                <Typography variant="h3">
+                  Configuration (Step 1)
+                </Typography>
+              </Grid>
+              <Grid item xs={12}>
+                  <Divider/>
+              </Grid>
+            {csrs.length > 1 ?
+                (csrs.map(csr => (
+                    <CSRBox key={csr.id.toString()} csr={csr}/>
+                ))) : (
+                    <CSRBox key={csrs.id.toString()} csr={csrs}/>
+            )}
+            </Grid>
+          </Box>)}
+      </Container>
     )
 }
 

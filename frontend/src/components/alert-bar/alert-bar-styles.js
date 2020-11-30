@@ -1,13 +1,17 @@
 import { makeStyles } from '@material-ui/core/styles';
 
 export const useStyles = makeStyles( theme => ({
+    root: {
+      margin: theme.spacing(1),
+    },
     error : {
       backgroundColor: theme.palette.error.dark,
-      margin: theme.spacing(1),
     },
     success: {
       backgroundColor: theme.palette.success.dark,
-      margin: theme.spacing(1),
+    },
+    warning: {
+      backgroundColor: theme.palette.warning.dark,
     },
     icon : {
       fontSize: 20,

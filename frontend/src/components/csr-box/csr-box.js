@@ -17,7 +17,7 @@ export default function CSRBox(props) {
               <Grid item xs={12}>
                 <CSRInfo csr={props.csr}/>
               </Grid>
-              <Button component={Link} to={`/config/${props.csr.id}`} color="primary" variant="contained" fullWidth>Select</Button>
+              <Button component={Link} to={`/config/${props.csr.id}`} disabled={props.csr.status !== "NEW" && props.csr.status !== "APPROBED"} color="primary" variant="contained" fullWidth>Select</Button>
           </Grid>
         </Paper>
       </Grid>
