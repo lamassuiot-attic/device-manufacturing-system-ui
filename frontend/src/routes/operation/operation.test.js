@@ -26,7 +26,7 @@ describe('<Operation />', () => {
 
   beforeEach(() => {
     updateKeycloakToken.mockImplementation(() => {
-      return Promise.resolve();
+      return { success: (callback) => callback() };
     });
   });
 

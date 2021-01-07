@@ -39,30 +39,28 @@ export default function Operation() {
       cn: cn,
       email: email,
     };
-    updateKeycloakToken()
-      .then(() => {
-        postGetCRT(data)
-          .then((response) => {
-            if (response.ok) {
-              response.blob().then((blob) => {
-                setError(null);
-                const url = window.URL.createObjectURL(new Blob([blob]));
-                const link = document.createElement('a');
-                link.href = url;
-                link.setAttribute('download', `${data.cn}.pem`);
-                document.body.appendChild(link);
-                link.click();
-                link.parentNode.removeChild(link);
-              });
-            } else {
-              response.text().then((text) => {
-                setError(text);
-              });
-            }
-          })
-          .catch((error) => setError(error.message));
-      })
-      .catch((error) => setError(error.message));
+    updateKeycloakToken().success(() => {
+      postGetCRT(data)
+        .then((response) => {
+          if (response.ok) {
+            response.blob().then((blob) => {
+              setError(null);
+              const url = window.URL.createObjectURL(new Blob([blob]));
+              const link = document.createElement('a');
+              link.href = url;
+              link.setAttribute('download', `${data.cn}.pem`);
+              document.body.appendChild(link);
+              link.click();
+              link.parentNode.removeChild(link);
+            });
+          } else {
+            response.text().then((text) => {
+              setError(text);
+            });
+          }
+        })
+        .catch((error) => setError(error.message));
+    });
     event.preventDefault();
   };
 

@@ -29,7 +29,7 @@ export default function Config(props) {
   useEffect(() => {
     const timer = setInterval(
       () =>
-        updateKeycloakToken().then(() => {
+        updateKeycloakToken().success(() => {
           getCSRStatus(props.match.params.id)
             .then((response) => {
               if (response.ok) {

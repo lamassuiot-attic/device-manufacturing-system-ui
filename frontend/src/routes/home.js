@@ -21,27 +21,25 @@ export default function Home() {
   const [isLoaded, setIsLoaded] = useState(null);
 
   const getCSRS = () => {
-    updateKeycloakToken()
-      .then(() => {
-        getCSRs()
-          .then((response) => {
-            if (response.ok) {
-              response.json().then((result) => {
-                if (result._embedded !== undefined) {
-                  setIsLoaded(true);
-                  setCSRs(result._embedded.csr);
-                }
-              });
-            } else {
-              response.text().then((text) => {
-                setIsLoaded(false);
-                setError(text);
-              });
-            }
-          })
-          .catch((error) => setError(error.message));
-      })
-      .catch((error) => setError(error.message));
+    updateKeycloakToken().success(() => {
+      getCSRs()
+        .then((response) => {
+          if (response.ok) {
+            response.json().then((result) => {
+              if (result.csr !== undefined) {
+                setIsLoaded(true);
+                setCSRs(result.csr.csr);
+              }
+            });
+          } else {
+            response.text().then((text) => {
+              setIsLoaded(false);
+              setError(text);
+            });
+          }
+        })
+        .catch((error) => setError(error.message));
+    });
   };
 
   useEffect(() => {
@@ -63,11 +61,9 @@ export default function Home() {
             <Grid item xs={12}>
               <Divider />
             </Grid>
-            {csrs.length > 1 ? (
-              csrs.map((csr) => <CSRBox key={csr.id.toString()} csr={csr} />)
-            ) : (
-              <CSRBox key={csrs.id.toString()} csr={csrs} />
-            )}
+            {csrs.map((csr) => (
+              <CSRBox key={csr.id.toString()} csr={csr} />
+            ))}
           </Grid>
         </Box>
       )}

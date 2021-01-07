@@ -15,7 +15,7 @@ jest.mock('../services/api/enroller');
 
 describe('<Home />', () => {
   const fakeCSRs = {
-    _embedded: {
+    csr: {
       csr: [
         {
           id: 1,
@@ -57,7 +57,7 @@ describe('<Home />', () => {
 
   beforeEach(() => {
     updateKeycloakToken.mockImplementation(() => {
-      return Promise.resolve();
+      return { success: (callback) => callback() };
     });
 
     getCSRs.mockImplementation(() => {
@@ -106,21 +106,6 @@ describe('<Home />', () => {
         ok: false,
         text: () => Promise.resolve('error from API'),
       });
-    });
-
-    let wrapper;
-    await act(async () => {
-      wrapper = mount(<Home />);
-    });
-    wrapper.update();
-
-    expect(wrapper.find(AlertBar)).toHaveLength(1);
-    expect(wrapper.find(AlertBar).prop('type')).toBe('error');
-  });
-
-  it('Home rendering unable to obtain Keycloak Token', async () => {
-    updateKeycloakToken.mockImplementation(() => {
-      return Promise.reject(new Error('unable to obtain Keycloak token'));
     });
 
     let wrapper;
