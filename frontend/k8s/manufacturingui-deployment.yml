@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: manufacturingui
+  labels:
+    app: manufacturingui
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: manufacturingui
+  template:
+    metadata:
+      labels:
+        app: manufacturingui
+    spec:
+      containers:
+        - name: manufacturingui
+          image: manufacturingui:latest
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 443
